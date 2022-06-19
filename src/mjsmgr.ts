@@ -1,8 +1,8 @@
 import {readdirSync} from 'fs';
 import {Bot} from 'mirai-js';
+
 import {init} from './console';
 import {JSPlugin} from './type';
-
 
 /**
  * @description 获得所有插件。
@@ -11,7 +11,7 @@ import {JSPlugin} from './type';
 async function getPlugins(dir: string): Promise<JSPlugin[]> {
   const pluginList: string[] = readdirSync(dir);
   const pl: JSPlugin[] = [];
-  for(const data of pluginList) {
+  for (const data of pluginList) {
     console.info(`已加载插件 ${data}`);
     pl.push((await import(`${dir}/${data}`)) as JSPlugin);
   }
@@ -20,7 +20,7 @@ async function getPlugins(dir: string): Promise<JSPlugin[]> {
 }
 
 // 初期化。
-(async () : Promise<void> => {
+(async(): Promise<void> => {
   const _VERSION = '1.1.1';
   const plugins: JSPlugin[] = await getPlugins('./plugins');
   console.info = console.info.bind(null, '[Info]');
@@ -58,12 +58,13 @@ async function getPlugins(dir: string): Promise<JSPlugin[]> {
       console.log(`\r${data.sender.group.id}(${data.sender.group.name}): {`);
     }
     let str = `\r  ${data.sender.id}(${data.sender.memberName}): ${
-      JSON.stringify(data.messageChain)}`;
+        JSON.stringify(data.messageChain)}`;
     let x: JSPlugin = {pluginFunc: async () => false, pluginName: ''};
     try {
       let temp = '';
       for (x of plugins) {
-        if (await x.pluginFunc(bot, data) === true) temp += `'${x.pluginName}' `;
+        if (await x.pluginFunc(bot, data) === true)
+          temp += `'${x.pluginName}' `;
       }
       if (temp !== '') str += ` // 插件 ${temp}被触发`;
     } catch (e) {
