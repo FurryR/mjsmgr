@@ -53,7 +53,7 @@ function perm2str(perm) {
 }
 function handler(bot, plugins, getPlugins, input) {
     return __awaiter(this, void 0, void 0, function () {
-        var cmd, _a, _b, _c, d, t_1;
+        var cmd, _a, _b, _c, d, t_1, d, t_2;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
@@ -64,15 +64,15 @@ function handler(bot, plugins, getPlugins, input) {
                         case 'exit': return [3, 1];
                         case 'help': return [3, 2];
                         case 'reload': return [3, 3];
-                        case 'send': return [3, 4];
-                        case 'list': return [3, 11];
+                        case 'send': return [3, 5];
+                        case 'list': return [3, 12];
                     }
-                    return [3, 17];
+                    return [3, 19];
                 case 1:
                     {
                         console.log('停止');
                         process.exit(0);
-                        return [3, 18];
+                        return [3, 20];
                     }
                     _d.label = 2;
                 case 2:
@@ -84,86 +84,84 @@ function handler(bot, plugins, getPlugins, input) {
                             'send': '(要求参数mode,id,text) 向QQ号为 id 的 群聊(mode=group)/好友(mode=friend) 发送 text',
                             'list': '(要求参数mode) 显示所有群聊(mode=group)/好友(mode=friend)'
                         });
-                        return [3, 18];
+                        return [3, 20];
                     }
                     _d.label = 3;
                 case 3:
-                    {
-                        console.info('Plugins reloading');
-                        plugins = getPlugins('./plugins');
-                        console.info('Plugins reloaded');
-                        return [3, 18];
-                    }
-                    _d.label = 4;
+                    console.info('Plugins reloading');
+                    return [4, getPlugins('./plugins')];
                 case 4:
+                    plugins = _d.sent();
+                    console.info('Plugins reloaded');
+                    return [3, 20];
+                case 5:
                     if (cmd.length != 4)
                         console.log("\u8981\u6C42 3 \u4E2A\u53C2\u6570\u4F46\u63D0\u4F9B\u4E86 ".concat(cmd.length - 1, " \u4E2A"));
                     _b = cmd[1];
                     switch (_b) {
-                        case 'friend': return [3, 5];
-                        case 'group': return [3, 7];
+                        case 'friend': return [3, 6];
+                        case 'group': return [3, 8];
                     }
-                    return [3, 9];
-                case 5: return [4, bot.sendMessage({
+                    return [3, 10];
+                case 6: return [4, bot.sendMessage({
                         friend: parseInt(cmd[2]),
                         message: new mirai_js_1.Message().addText(cmd[3])
                     })];
-                case 6:
+                case 7:
                     _d.sent();
-                    return [3, 10];
-                case 7: return [4, bot.sendMessage({
+                    return [3, 11];
+                case 8: return [4, bot.sendMessage({
                         group: parseInt(cmd[2]),
                         message: new mirai_js_1.Message().addText(cmd[3])
                     })];
-                case 8:
-                    _d.sent();
-                    return [3, 10];
                 case 9:
+                    _d.sent();
+                    return [3, 11];
+                case 10:
                     {
                         console.log('mode 必须为 group 或 friends');
-                        return [3, 10];
+                        return [3, 11];
                     }
-                    _d.label = 10;
-                case 10: return [3, 18];
-                case 11:
+                    _d.label = 11;
+                case 11: return [3, 20];
+                case 12:
                     if (cmd.length != 2)
                         console.log("\u8981\u6C42 1 \u4E2A\u53C2\u6570\u4F46\u63D0\u4F9B\u4E86 ".concat(cmd.length - 1, " \u4E2A"));
                     _c = cmd[1];
                     switch (_c) {
-                        case 'friend': return [3, 12];
-                        case 'group': return [3, 14];
+                        case 'group': return [3, 13];
+                        case 'friend': return [3, 15];
                     }
-                    return [3, 15];
-                case 12: return [4, bot.getGroupList()];
-                case 13:
+                    return [3, 17];
+                case 13: return [4, bot.getGroupList()];
+                case 14:
                     d = _d.sent();
                     d.forEach(function (data) {
                         t_1.set("".concat(data.id, "(").concat(data.name, ")"), perm2str(data.permission));
                     });
                     console.table(Object.fromEntries(t_1.entries()));
-                    return [3, 16];
-                case 14:
-                    {
-                        bot.sendMessage({
-                            group: parseInt(cmd[2]),
-                            message: new mirai_js_1.Message().addText(cmd[3])
-                        });
-                        return [3, 16];
-                    }
-                    _d.label = 15;
-                case 15:
+                    return [3, 18];
+                case 15: return [4, bot.getFriendList()];
+                case 16:
+                    d = _d.sent();
+                    d.forEach(function (data) {
+                        t_2.set("".concat(data.id, "(").concat(data.name, ")"), data.remark);
+                    });
+                    console.table(Object.fromEntries(t_2.entries()));
+                    return [3, 18];
+                case 17:
                     {
                         console.log('mode 必须为 group 或 friends');
-                        return [3, 16];
+                        return [3, 18];
                     }
-                    _d.label = 16;
-                case 16: return [3, 18];
-                case 17:
+                    _d.label = 18;
+                case 18: return [3, 20];
+                case 19:
                     {
                         console.log("\u672A\u77E5\u7684\u547D\u4EE4 ".concat(cmd[0], ". \u8F93\u5165 'help' \u6765\u83B7\u5F97\u5E2E\u52A9\u3002"));
                     }
-                    _d.label = 18;
-                case 18: return [2];
+                    _d.label = 20;
+                case 20: return [2];
             }
         });
     });
