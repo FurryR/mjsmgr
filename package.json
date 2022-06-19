@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mirai-js": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  }
+}
